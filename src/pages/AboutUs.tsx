@@ -1,4 +1,5 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function AboutUs() {
   return (
@@ -11,12 +12,12 @@ export default function AboutUs() {
             </svg>
             <h1 className="text-2xl font-bold">Futo 1k</h1>
           </div>
-          <nav className="hidden md:flex space-x-8">
-            <a href="/" className="text-gray-600 hover:text-[#4ade80]">Home</a>
-            <a href="/about" className="text-[#4ade80] font-semibold">About</a>
-            <a href="#" className="text-gray-600 hover:text-[#4ade80]">Causes</a>
-            <a href="#" className="text-gray-600 hover:text-[#4ade80]">Gallery</a>
-            <a href="#" className="text-gray-600 hover:text-[#4ade80]">Contact</a>
+          <nav className=" md:flex space-x-8">
+            <Link to="/" className="text-[#4ade80] font-semibold">Home</Link>
+            <Link to="/AboutUs" className="text-gray-600 hover:text-[#4ade80]">About</Link>
+            <Link to="/Campaigns" className="text-gray-600 hover:text-[#4ade80]">Campaigns</Link>
+            <Link to="/Gallery" className="text-gray-600 hover:text-[#4ade80]">Gallery</Link>
+            <Link to="/Contact" className="text-gray-600 hover:text-[#4ade80]">Contact</Link>
           </nav>
           <div className="flex items-center space-x-4">
             <button className="hidden md:inline-flex px-4 py-2 border border-[#4ade80] text-[#4ade80] rounded-md hover:bg-[#4ade80] hover:text-white transition-colors">
@@ -168,10 +169,11 @@ export default function AboutUs() {
             <div>
               <h4 className="text-xl font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><a href="/" className="text-gray-400 hover:text-white">Home</a></li>
-                <li><a href="/about" className="text-gray-400 hover:text-white">About</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white">Causes</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white">Contact</a></li>
+              <Link to="/" className="text-[#4ade80] font-semibold">Home</Link>
+            <Link to="/AboutUs" className="text-gray-600 hover:text-[#4ade80]">About</Link>
+            <Link to="/Campaigns" className="text-gray-600 hover:text-[#4ade80]">Campaigns</Link>
+            <Link to="/Gallery" className="text-gray-600 hover:text-[#4ade80]">Gallery</Link>
+            <Link to="/Contact" className="text-gray-600 hover:text-[#4ade80]">Contact</Link>
               </ul>
             </div>
             <div>
