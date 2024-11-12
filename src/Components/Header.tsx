@@ -36,6 +36,9 @@ function Header() {
           <Link to="/AboutUs" className="text-gray-600 hover:text-[#4ade80]">
             About
           </Link>
+          <Link to="/User" className="text-gray-600 hover:text-[#4ade80]">
+            User
+          </Link>
           <Link to="/Campaigns" className="text-gray-600 hover:text-[#4ade80]">
             Campaigns
           </Link>
@@ -93,9 +96,8 @@ function Header() {
 
       {/* Mobile Menu Dropdown */}
       <div
-        className={`md:hidden bg-white ${
-          isMenuOpen ? 'block' : 'hidden'
-        } shadow-lg`}
+        className={`md:hidden bg-white ${isMenuOpen ? 'block' : 'hidden'
+          } shadow-lg`}
       >
         <nav className="flex flex-col px-4 py-2">
           <Link
@@ -103,6 +105,12 @@ function Header() {
             className="py-2 text-[#4ade80] font-semibold border-b border-gray-100"
           >
             Home
+          </Link>
+          <Link
+            to="/User"
+            className="py-2 text-gray-600 hover:text-[#4ade80] border-b border-gray-100"
+          >
+            User
           </Link>
           <Link
             to="/AboutUs"

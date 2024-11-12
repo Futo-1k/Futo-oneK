@@ -5,6 +5,8 @@ import AboutUs from "./pages/AboutUs.tsx";
 import Campaigns  from "./pages/Campaigns.tsx";
 import Home from "./pages/Home.tsx";
 import React from "react";
+import UserRegister from "./pages/Register/UserRegister.tsx";
+import UserUi from "./pages/UserPages/UserUi.tsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 export default function Component() {
@@ -15,6 +17,8 @@ export default function Component() {
 
      {/* Route for the About Us page */}
       <Route path="/" element={<Home/>} />
+      <Route path="/User" element={<UserUi/>} />
+      <Route path="/userRegister" element={<UserRegister/>} />
       <Route path="/Campaigns" element={<Campaigns/>} />
       <Route path="/Contact" element={<Contact/>} />
       <Route path="/Gallery" element={<Gallery/>} />

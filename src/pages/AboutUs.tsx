@@ -30,7 +30,7 @@ export default function AboutUs() {
               </div>
               <div className="md:w-1/2">
                 <img
-                  src="/placeholder.svg?height=400&width=600"
+                  src="/student_fund.png?height=400&width=600"
                   alt="Charity volunteers in action"
                   className="rounded-lg shadow-lg w-full h-auto"
                 />
@@ -88,9 +88,9 @@ export default function AboutUs() {
             <h2 className="text-3xl font-bold text-center mb-12">Our Team</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
-                { name: "Jane Doe", role: "Executive Director", image: "/placeholder.svg?height=300&width=300" },
-                { name: "John Smith", role: "Operations Manager", image: "/placeholder.svg?height=300&width=300" },
-                { name: "Emily Brown", role: "Fundraising Coordinator", image: "/placeholder.svg?height=300&width=300" },
+                { name: "Eze Ernest", role: "Executive Director", image: "/placeholder-image1.png?height=300&width=300" },
+                { name: "David Chike", role: "Operations Manager", image: "/placeholder-image3.png?height=300&width=300" },
+                { name: "Emily Brown", role: "Fundraising Coordinator", image: "/placeholder-image4.png?height=300&width=300" },
               ].map((member, index) => (
                 <div key={index} className="text-center">
                   <img src={member.image} alt={member.name} className="w-48 h-48 rounded-full mx-auto mb-4 object-cover" />
