@@ -10,15 +10,22 @@ const UserRegister = () => {
         phoneNumber: "",
         institution: "",
     });
+
     const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [passwordError, setPasswordError] = useState<string | null>(null);
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
+        if (name === "password") {
+            validatePassword(value);
+        }
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
     };
+
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -52,6 +59,16 @@ const UserRegister = () => {
         "Federal University Oye-Ekiti (FUOYE)",
         "Michael Okpara University of Agriculture"
     ].sort();
+    const validatePassword = (password: string) => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            setPasswordError(
+                "Your password must have at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol."
+            );
+        } else {
+            setPasswordError(null);
+        }
+    };
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // Handle form submission
@@ -194,20 +211,45 @@ const UserRegister = () => {
                                         ))}
                                     </select>
                                 </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Password
-                                    </label>
-                                    <input
-                                        type="password"
-                                        placeholder="Password @EzeDarling1."
-                                        name="password"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
-                                        required
-                                    />
-                                </div>
+                                {/* Password section with validation */}
+        <div className="space-y-6">
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                <div className="relative">
+                    <input
+                        type="password"
+                        placeholder="Password @EzeDarling1."
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className={`w-full px-4 py-3 rounded-lg border transition-all duration-300 ${
+                            passwordError
+                                ? "border-red-500 focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                : "border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        }`}
+                        required
+                    />
+                    {passwordError && (
+                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mt-2">
+                            {passwordError}
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+
+                    {/* Password requirements */}
+                    <div className="bg-gray-100 rounded-lg p-4 mb-6">
+                        <p className="font-semibold text-gray-700 mb-2">Your password must have at least:</p>
+                        <ul className="list-disc pl-6 text-gray-600 space-y-2">
+                            <li>Minimum 8 characters</li>
+                            <li>1 uppercase letter</li>
+                            <li>1 lowercase letter</li>
+                            <li>1 number</li>
+                            <li>1 symbol</li>
+                        </ul>
+                    </div>
+
                             </div>
 
                             {/* Submit Button */}
@@ -218,7 +260,20 @@ const UserRegister = () => {
                                 Create Account
                             </button>
                         </form>
+                                   {/* Terms and privacy */}
+                        <p className="text-gray-600 text-sm">
+                            By clicking the Sign up button below, you agree to the
+                            <a href="#" className="text-blue-500 hover:underline">
+                                Terms of service
+                            </a>{" "}
+                            and acknowledge the{" "}
+                            <a href="#" className="text-blue-500 hover:underline">
+                                Privacy notice
+                            </a>
+                        </p>
+
                     </div>
+
                 </div>
             </div>
         </section>

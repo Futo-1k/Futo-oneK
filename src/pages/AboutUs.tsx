@@ -1,9 +1,15 @@
 import Footer from "../Components/Footer.tsx";
 import Header from "../Components/Header.tsx";
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function AboutUs() {
+  const navigate = useNavigate();
+  const ToVolunteer = () => {
+    navigate("/Volunteer");
+  };
+
+
   return (
     <div className="bg-[#FCFCFC] min-h-screen">
       <Header/>
@@ -127,7 +133,9 @@ export default function AboutUs() {
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">
               Whether you want to volunteer, donate, or spread the word about our cause, there are many ways to get involved and support our mission.
             </p>
-            <button className="px-6 py-3 bg-[#4ade80] hover:bg-[#000000] text-white rounded-md transition-colors">
+            <button
+            onClick={ToVolunteer}
+            className="px-6 py-3 bg-[#4ade80] hover:bg-[#000000] text-white rounded-md transition-colors">
               Get Involved
             </button>
           </div>
