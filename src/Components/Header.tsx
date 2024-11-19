@@ -21,7 +21,7 @@ const Header = () => {
 
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
-  const isActive = (path) => {
+  const isActive = (path: string) => {
     if (path === "/" && currentPath === "/") return true;
     if (path !== "/" && currentPath.startsWith(path)) return true;
     return false;
@@ -32,8 +32,8 @@ const Header = () => {
     { path: "AboutUs", label: "About" },
     { path: "/User", label: "User" },
     { path: "/Campaigns", label: "Campaigns" },
-    { path: "/Volunteer", label: "Volunteer" },
-    { path: "Gallery", label: "Gallery" },
+
+    { path: "/Gallery", label: "Gallery" },
     { path: "/Contact", label: "Contact" },
   ];
 
@@ -54,20 +54,20 @@ const Header = () => {
     }
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(`Searching for "${searchQuery}" in ${searchParameter}`);
     window.location.href = `/search?q=${searchQuery}&type=${searchParameter}`;
   };
   const navigate = useNavigate()
-  const handleNavigation = (path) => {
+  const handleNavigation = (path: string) => {
     navigate(path);
   };
 
   return (
     <header className="sticky top-0 z-10 bg-white shadow-sm">
-      <div className="container flex items-center justify-between px-2 py-6 mx-auto">
-        <div className={`flex items-center space-x-4 ${isSearchOpen ? 'hidden md:flex' : 'flex'}`}>
+      <div className="container flex items-center justify-between px-3 py-6 mx-auto">
+        <div className={`flex items-center space-x-4 pr-5 ${isSearchOpen ? 'hidden md:flex' : 'flex'}`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-8 w-8 text-[#4ade80]"
@@ -113,9 +113,9 @@ const Header = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-[#4ade80]"
               />
               <select
-                placeholder="Search"
+
                 name="Search"
-                id="search"
+                id="search-type"
                 value={searchParameter}
                 onChange={(e) => setSearchParameter(e.target.value)}
                 className="absolute py-1 pl-2 pr-8 text-gray-600 -translate-y-1/2 bg-transparent border-l border-gray-300 right-2 top-1/2 focus:outline-none"
@@ -209,13 +209,13 @@ const Header = () => {
               </Link>
             ))}
             <button
-              onClick={() => handleNavigation('/login')}
+              onClick={() => handleNavigation('/Login')}
               className="mt-4 w-full px-4 py-2 border border-[#4ade80] text-[#4ade80] rounded-md hover:bg-[#4ade80] hover:text-white transition-colors"
             >
               Login
             </button>
             <button
-              onClick={() => handleNavigation('/register')}
+              onClick={() => handleNavigation('/Login/userRegister')}
               className="mt-2 w-full px-4 py-2 bg-[#4ade80] text-white rounded-md hover:bg-[#2ecc71] transition-colors"
             >
               Signup

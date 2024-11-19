@@ -18,7 +18,7 @@ export default function AboutUs() {
         <section className="bg-[#4ade80] text-white py-20">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">About Futo 1k</h1>
-            <p className="text-xl max-w-2xl mx-auto">Dedicated to making a positive impact in our community and beyond.</p>
+            <p className="text-xl max-w-2xl mx-auto">Dedicated to making a positive impact in FUTO and beyond.</p>
           </div>
         </section>
 

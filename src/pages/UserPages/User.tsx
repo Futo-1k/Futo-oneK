@@ -1,82 +1,129 @@
-import PopularDona from "./PopularDona.tsx";
-import React from "react";
-import { BookOpen, Briefcase, LayoutGrid, School } from "lucide-react";
+import DonateButton from "../../Components/DonateButton";
+import DonationModal from "../../Components/DonationModal";
+import React, { useState } from "react";
+import { FaBell } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const User = () => {
-    return (
-        <section className="w-full min-h-screen bg-gray-50">
-            <div className="max-w-[1400px] mx-auto p-4 md:p-8 lg:p-12">
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 xl:gap-12">
-                    {/* Funding Section */}
-                    <div className="bg-white rounded-xl shadow-lg p-6 lg:p-8 h-full">
-                        <div className="bg-slate-200 rounded-lg shadow-md p-6 text-center mb-8">
-                            <h2 className="font-extrabold text-2xl md:text-3xl xl:text-4xl">
-                                Start Your <br /> Own Funding
-                            </h2>
-                            <p className="mt-3 text-sm md:text-base xl:text-lg text-gray-600">
-                                Create your own Donor Post
-                            </p>
-                            <button className="px-6 py-3 mt-6 bg-green-500 hover:bg-green-600 text-white rounded-md transition-all duration-300 shadow hover:shadow-lg hover:-translate-y-1">
-                                Create Your Post
-                            </button>
-                        </div>
+const UserDashboard = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCampaignId, setSelectedCampaignId] = useState<number | null>(null); // Track the selected campaign ID
 
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <Link
-                                to=""
-                                className="flex items-center justify-center gap-2 p-4 bg-white hover:bg-gray-50 rounded-lg shadow hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
-                            >
-                                <LayoutGrid className="w-6 h-6 text-gray-600 group-hover:scale-110 transition-transform" />
-                                <span className="text-gray-800 font-medium">All</span>
-                            </Link>
+  const [userStats] = useState({
+    donationsMade: 25,
+    rankingPercent: 92,
+    totalAmountDonated: 12000, // in Naira
+  });
 
-                            <Link
-                                to=""
-                                className="flex items-center justify-center gap-2 p-4 bg-[#3fc0ba] hover:bg-[#35a5a0] rounded-lg shadow hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
-                            >
-                                <School className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
-                                <span className="text-white font-medium">School</span>
-                            </Link>
+  const campaigns = [
+    {
+      id: 1,
+      name: 'Campaign A',
+      description: 'Help build a school in rural areas.',
+      donationGoal: 500000,
+      raisedAmount: 12500,
+      startDate: '2024-11-01',
+    },
+    {
+      id: 2,
+      name: 'Campaign B',
+      description: 'Support medical research for cancer.',
+      donationGoal: 1000000,
+      raisedAmount: 700000,
+      startDate: '2024-10-15',
+    },
+  ];
 
-                            <Link
-                                to=""
-                                className="flex items-center justify-center gap-2 p-4 bg-red-500 hover:bg-red-600 rounded-lg shadow hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
-                            >
-                                <Briefcase className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
-                                <span className="text-white font-medium">Medical</span>
-                            </Link>
+  const notifications = [
+    'New campaign launched!',
+    'You have a new donation match!',
+    'Campaign A has reached 50% of its goal!',
+  ];
 
-                            <Link
-                                to=""
-                                className="flex items-center justify-center gap-2 p-4 bg-purple-500 hover:bg-purple-600 rounded-lg shadow hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
-                            >
-                                <BookOpen className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
-                                <span className="text-white font-medium">Dept Dues</span>
-                            </Link>
-                        </div>
-                    </div>
+  return (
+    <div className="container mx-auto px-4 py-16 md:py-24">
+      {/* Welcome Card with User Stats */}
+      <div
+        className="bg-cover bg-center bg-no-repeat p-8 rounded-lg shadow-lg mb-10"
+        style={{ backgroundImage: 'url("/background.png")' }}
+      >
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-3xl font-bold text-white">Welcome, [User Name]</h2>
+          <div className="relative">
 
-                    {/* Popular Campaigns Section */}
-                    <div className="bg-white rounded-xl shadow-lg p-6 lg:p-8 h-full">
-                        <div className="bg-slate-200 rounded-lg shadow-md p-6 text-center mb-8">
-                            <h2 className="font-extrabold text-2xl md:text-3xl xl:text-4xl">
-                                Popular <br /> Campaigns
-                            </h2>
-                            <p className="mt-3 text-sm md:text-base xl:text-lg text-gray-600">
-                                Explore trending fundraisers
-                            </p>
-                            <button className="px-6 py-3 mt-6 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-all duration-300 shadow hover:shadow-lg hover:-translate-y-1">
-                                View Campaigns
-                            </button>
-                        </div>
-                        <PopularDona />
-                    </div>
-                </div>
+            {/* Professional Notification Bell Icon */}
+            <FaBell className="text-2xl text-white cursor-pointer" />
+            {notifications.length > 0 && (
+              <span className="absolute top-0 right-0 cursor-pointer bg-red-500 text-white rounded-full text-xs w-5 h-5 flex justify-center items-center">
+                {notifications.length}
+              </span>
+            )}
+          </div>
+        </div>
+        <p className="text-white mb-4">
+          You have donated {userStats.donationsMade} times, contributing a total of ₦{userStats.totalAmountDonated}.
+        </p>
+        <p className="text-white">
+          You are in the top {userStats.rankingPercent}% of donors!🥳
+        </p>
+      </div>
+
+      {/* Available Campaigns */}
+      <div className="mb-12">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Available Campaigns</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {campaigns.map((campaign) => (
+            <div key={campaign.id} className="bg-white rounded-lg shadow-lg p-6 h-auto">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">{campaign.name}</h3>
+              <p className="text-gray-600 mb-4">{campaign.description}</p>
+              <p className="text-gray-600 mb-2">Goal: ₦{campaign.donationGoal}</p>
+              <p className="text-gray-600 mb-4">Raised: ₦{campaign.raisedAmount}</p>
+              <button
+                onClick={() => {
+                  setSelectedCampaignId(campaign.id); // Set the selected campaign ID
+                  setIsModalOpen(true); // Open the modal
+                }}
+                className="mt-4 px-6 py-2 bg-[#4ade80] hover:bg-[#2ecc71] text-white rounded-md"
+              >
+                Donate Now
+              </button>
             </div>
-        </section>
+          ))}
+        </div>
+      </div>
 
-    );
+      {/* Donation History Table */}
+      <div className="mb-12">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Your Donation History</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg">
+            <thead>
+              <tr className="border-b">
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-800">Campaign Name</th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-800">Donation Goal</th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-800">Amount Donated</th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-800">Donation Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {campaigns.map((campaign) => (
+                <tr key={campaign.id} className="border-b">
+                  <td className="px-6 py-4 text-sm text-gray-600">{campaign.name}</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">₦{campaign.donationGoal}</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">₦{Math.round(Math.random() * campaign.raisedAmount)}</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">{campaign.startDate}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Donation Modal */}
+      {isModalOpen && selectedCampaignId !== null && (
+        <DonationModal setIsModalOpen={setIsModalOpen} campaignId={selectedCampaignId} />
+      )}
+    </div>
+  );
 };
 
-export default User;
+export default UserDashboard;

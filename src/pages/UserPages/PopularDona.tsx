@@ -41,7 +41,7 @@ const PopularDona = () => {
                             <div
                                 className="h-full bg-green-400 rounded-full transition-all duration-300"
                                 style={{
-                                    width: `${calculateProgress(event.raised, event.goal)}%`
+                                    width: `₦{calculateProgress(event.raised, event.goal)}%`
                                 }}
                             />
                         </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Camera } from "lucide-react";
 
+
 const UserRegister = () => {
     const [formData, setFormData] = useState({
         firstName: "",
@@ -60,7 +61,7 @@ const UserRegister = () => {
         "Michael Okpara University of Agriculture"
     ].sort();
     const validatePassword = (password: string) => {
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@₦!%*?&])[A-Za-z\d@₦!%*?&]{8,}₦/;
         if (!passwordRegex.test(password)) {
             setPasswordError(
                 "Your password must have at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol."
@@ -93,7 +94,7 @@ const UserRegister = () => {
                             {/* Profile Picture Upload */}
                             <div className="flex flex-col items-center mb-8">
                                 <div className="relative w-32 h-32 mb-4">
-                                    <div className={`w-full h-full rounded-full overflow-hidden border-4 border-gray-200 ${!imagePreview ? 'bg-gray-100' : ''}`}>
+                                    <div className={`w-full h-full rounded-full overflow-hidden border-4 border-gray-200 ₦{!imagePreview ? 'bg-gray-100' : ''}`}>
                                         {imagePreview ? (
                                             <img
                                                 src={imagePreview}
@@ -108,7 +109,7 @@ const UserRegister = () => {
                                     </div>
                                     <label
                                         htmlFor="profile-photo"
-                                        className="absolute bottom-0 right-0 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full cursor-pointer shadow-lg transition-all duration-300"
+                                        className="absolute bottom-0 right-0 bg-[#4ade80] hover:bg-[#2ecc71] text-white p-2 rounded-full cursor-pointer shadow-lg transition-all duration-300"
                                     >
                                         <Camera className="w-5 h-5" />
                                     </label>
@@ -133,7 +134,7 @@ const UserRegister = () => {
                                     <input
                                         type="text"
                                         name="firstName"
-                                        placeholder="Firstname @Ernest"
+                                        placeholder="Firstname "
                                         value={formData.firstName}
                                         onChange={handleChange}
                                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
@@ -146,7 +147,7 @@ const UserRegister = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        placeholder="Lastname @chike"
+                                        placeholder="Lastname"
                                         name="lastName"
                                         value={formData.lastName}
                                         onChange={handleChange}
@@ -179,7 +180,7 @@ const UserRegister = () => {
                                     <input
                                         type="tel"
                                         name="phoneNumber"
-                                        placeholder="Number @+234 or 070"
+                                        placeholder="Number"
                                         value={formData.phoneNumber}
                                         onChange={handleChange}
                                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
@@ -197,77 +198,75 @@ const UserRegister = () => {
                                     <select
                                         id="institution"
                                         name="institution"
-                                        placeholder="Select Institution"
                                         value={formData.institution}
                                         onChange={handleChange}
                                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 bg-white"
                                         required
                                     >
                                         <option value="">Select your institution</option>
-                                        {Universities.map((University, index) => (
-                                            <option key={index} value={University}>
-                                                {University}
+                                        {Universities.map((university, index) => (
+                                            <option key={index} value={university}>
+                                                {university}
                                             </option>
                                         ))}
                                     </select>
                                 </div>
                                 {/* Password section with validation */}
-        <div className="space-y-6">
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                <div className="relative">
-                    <input
-                        type="password"
-                        placeholder="Password @EzeDarling1."
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        className={`w-full px-4 py-3 rounded-lg border transition-all duration-300 ${
-                            passwordError
-                                ? "border-red-500 focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                                : "border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        }`}
-                        required
-                    />
-                    {passwordError && (
-                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mt-2">
-                            {passwordError}
-                        </div>
-                    )}
-                </div>
-            </div>
-        </div>
+                                <div className="space-y-6">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                                        <div className="relative">
+                                            <input
+                                                type="password"
+                                                placeholder="Password"
+                                                name="password"
+                                                value={formData.password}
+                                                onChange={handleChange}
+                                                className={`w-full px-4 py-3 rounded-lg border transition-all duration-300 ₦{passwordError
+                                                        ? "border-red-500 focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                        : "border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                    }`}
+                                                required
+                                            />
+                                            {passwordError && (
+                                                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mt-2">
+                                                    {passwordError}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
 
-                    {/* Password requirements */}
-                    <div className="bg-gray-100 rounded-lg p-4 mb-6">
-                        <p className="font-semibold text-gray-700 mb-2">Your password must have at least:</p>
-                        <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                            <li>Minimum 8 characters</li>
-                            <li>1 uppercase letter</li>
-                            <li>1 lowercase letter</li>
-                            <li>1 number</li>
-                            <li>1 symbol</li>
-                        </ul>
-                    </div>
+                                {/* Password requirements */}
+                                <div className="bg-gray-100 rounded-lg p-4 mb-6">
+                                    <p className="font-semibold text-gray-700 mb-2">Your password must have at least:</p>
+                                    <ul className="list-disc pl-6 text-gray-600 space-y-2">
+                                        <li>Minimum 8 characters</li>
+                                        <li>1 uppercase letter</li>
+                                        <li>1 lowercase letter</li>
+                                        <li>1 number</li>
+                                        <li>1 symbol</li>
+                                    </ul>
+                                </div>
 
                             </div>
 
                             {/* Submit Button */}
                             <button
                                 type="submit"
-                                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg shadow hover:shadow-lg transition-all duration-300 mt-8"
+                                className="w-full bg-[#4ade80] hover:bg-[#2ecc71] text-white font-semibold py-3 rounded-lg shadow hover:shadow-lg transition-all duration-300 mt-8"
                             >
                                 Create Account
                             </button>
                         </form>
-                                   {/* Terms and privacy */}
+                        {/* Terms and privacy */}
                         <p className="text-gray-600 text-sm">
                             By clicking the Sign up button below, you agree to the
-                            <a href="#" className="text-blue-500 hover:underline">
+                            <a href="#" className="text-[#4ade80] hover:underline">
                                 Terms of service
                             </a>{" "}
                             and acknowledge the{" "}
-                            <a href="#" className="text-blue-500 hover:underline">
+                            <a href="#" className="text-[#4ade80] hover:underline">
                                 Privacy notice
                             </a>
                         </p>

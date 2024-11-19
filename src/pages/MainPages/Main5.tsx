@@ -73,7 +73,7 @@ const Main5 = () => {
           <div className="flex justify-center gap-4 mb-8">
             <button
               onClick={() => filterNews("all")}
-              className={`px-4 py-2 rounded-md transition-colors ${
+              className={`px-4 py-2 rounded-md transition-colors ₦{
                 activeFilter === "all"
                   ? "bg-[#4ade80] text-white"
                   : "bg-gray-200 hover:bg-gray-300"
@@ -83,7 +83,7 @@ const Main5 = () => {
             </button>
             <button
               onClick={() => filterNews("recent")}
-              className={`px-4 py-2 rounded-md transition-colors ${
+              className={`px-4 py-2 rounded-md transition-colors ₦{
                 activeFilter === "recent"
                   ? "bg-[#4ade80] text-white"
                   : "bg-gray-200 hover:bg-gray-300"
@@ -93,7 +93,7 @@ const Main5 = () => {
             </button>
             <button
               onClick={() => filterNews("highlighted")}
-              className={`px-4 py-2 rounded-md transition-colors ${
+              className={`px-4 py-2 rounded-md transition-colors ₦{
                 activeFilter === "highlighted"
                   ? "bg-[#4ade80] text-white"
                   : "bg-gray-200 hover:bg-gray-300"
@@ -107,9 +107,9 @@ const Main5 = () => {
             {getFilteredNews().map((news, index) => (
               <div
                 key={index}
-                className={`bg-white rounded-lg overflow-hidden shadow-md transition-transform duration-300 ${
+                className={`bg-white rounded-lg overflow-hidden shadow-md transition-transform duration-300 ₦{
                   isHovered === index ? "transform scale-105" : ""
-                } ${news.isHighlighted ? "border-2 border-[#4ade80]" : ""}`}
+                } ₦{news.isHighlighted ? "border-2 border-[#4ade80]" : ""}`}
                 onMouseEnter={() => setIsHovered(index)}
                 onMouseLeave={() => setIsHovered(null)}
               >

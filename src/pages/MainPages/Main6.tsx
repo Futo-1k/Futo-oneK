@@ -1,19 +1,15 @@
-import React, { useState } from "react";
+import React, { FormEventHandler, useState } from "react";
 
 const Main6 = () => {
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if (email && email.includes("@")) {
       setIsSubscribed(true);
-      setEmail("");
-      // Here you would typically make an API call to your backend
-      // to handle the actual subscription process
     }
   };
-
   return (
     <div>
       <section className="bg-[#4ade80] text-white py-16">
@@ -28,7 +24,7 @@ const Main6 = () => {
             </div>
             {!isSubscribed ? (
               <form
-                onSubmit={handleSubscribe}
+                onClick={handleSubscribe}
                 className="flex w-[50%] md:w-auto"
               >
                 <input

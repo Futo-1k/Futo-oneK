@@ -15,9 +15,12 @@ export class Main1 extends Component {
                                 Join us in making a difference across our campus. Whether it’s supporting student initiatives, funding essential projects, or fostering academic success, Futo 1k brings us all together to support the FUTO community.
                             </p>
                             <div className="flex space-x-4">
-                                <button className="px-6 py-3 bg-[#4ade80] hover:bg-[#FF5555] text-white rounded-md transition-colors">
+                                <Link to="/login">
+                                <button className="px-6 py-3 bg-[#4ade80] hover:bg-[#2ecc71] text-white rounded-md transition-colors">
                                     Donate Now
                                 </button>
+                                </Link>
+                                
                                 <Link to="/AboutUs">
                                     <button className="px-6 py-3 border border-[#4ade80] text-[#4ade80] rounded-md hover:bg-[#4ade80] hover:text-white transition-colors">
                                         Know About Us

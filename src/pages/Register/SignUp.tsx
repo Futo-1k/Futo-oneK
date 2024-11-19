@@ -1,15 +1,14 @@
 import Footer from "../../Components/Footer.tsx";
-import Header from "../../Components/Header.tsx";
+import UserHeader from "../../Components/UserHeader.tsx";
 import React, { Component } from "react";
-import Volunteer from "../UserPages/Volunteer.tsx";
+import UserRegister from "../Register/UserRegister.tsx";
 
 export class SignUp extends Component {
   render() {
     return (
       <div>
-        <Header/>
-        <Volunteer/>
-        <Footer/>
+        <UserHeader/>
+        <UserRegister/>
       </div>
     )
   }
