@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FaBell } from 'react-icons/fa';
-import DonateButton from '../../Components/DonateButton';
-import DonationModal from '../../Components/DonationModal';
+import DonateButton from "../../Components/DonateButton";
+import DonationModal from "../../Components/DonationModal";
+import React, { useState } from "react";
+import { FaBell } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const UserDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,6 +49,7 @@ const UserDashboard = () => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl font-bold text-white">Welcome, [User Name]</h2>
           <div className="relative">
+
             {/* Professional Notification Bell Icon */}
             <FaBell className="text-2xl text-white cursor-pointer" />
             {notifications.length > 0 && (

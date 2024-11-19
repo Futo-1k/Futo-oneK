@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import Header from "../Components/Header"
-import Footer from "../Components/Footer"
+import Footer from "../Components/Footer";
+import Header from "../Components/Header";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 type GalleryImage = {
   src: string;
@@ -30,14 +30,14 @@ export default function Gallery() {
 
   const categories = ['All', ...Array.from(new Set(galleryImages.map(img => img.category)))]
 
-  const filteredImages = activeCategory === 'All' 
-    ? galleryImages 
+  const filteredImages = activeCategory === 'All'
+    ? galleryImages
     : galleryImages.filter(img => img.category === activeCategory)
 
   return (
     <div className="bg-[#FCFCFC] min-h-screen">
       <Header />
-      
+
       <main className="pb-16">
         <section className="bg-[#4ade80] text-white py-20">
           <div className="container mx-auto px-4 text-center">

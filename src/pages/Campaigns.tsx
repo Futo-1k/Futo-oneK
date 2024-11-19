@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import Header from '../Components/Header';
-import Footer from '../Components/Footer';
+import Footer from "../Components/Footer";
+import Header from "../Components/Header";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 type Campaign = {
   id: number;
@@ -21,7 +21,7 @@ export default function Campaigns() {
       id: 1,
       title: "Clean Water for Rural Communities",
       description: "Help us provide clean, safe drinking water to rural communities in need.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/frame-226.png?height=400&width=600",
       goal: 50000,
       raised: 35000,
       daysLeft: 15
@@ -30,7 +30,7 @@ export default function Campaigns() {
       id: 2,
       title: "Education for Underprivileged Children",
       description: "Support our mission to bring quality education to underprivileged children.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/frame-234.png?height=400&width=600",
       goal: 75000,
       raised: 60000,
       daysLeft: 30
@@ -39,7 +39,7 @@ export default function Campaigns() {
       id: 3,
       title: "Emergency Food Relief",
       description: "Provide emergency food supplies to families affected by natural disasters.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/frame-235.png?height=400&width=600",
       goal: 30000,
       raised: 22000,
       daysLeft: 7
@@ -48,7 +48,7 @@ export default function Campaigns() {
       id: 4,
       title: "Healthcare for the Homeless",
       description: "Support our mobile clinics providing essential healthcare to homeless individuals.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/frame-237.png?height=400&width=600",
       goal: 60000,
       raised: 45000,
       daysLeft: 20
@@ -57,7 +57,7 @@ export default function Campaigns() {
       id: 5,
       title: "Reforestation Project",
       description: "Help us plant trees and restore forests in areas affected by deforestation.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/water.png?height=400&width=600",
       goal: 40000,
       raised: 28000,
       daysLeft: 25
@@ -66,7 +66,7 @@ export default function Campaigns() {
       id: 6,
       title: "Women's Empowerment Program",
       description: "Empower women through skills training and microfinance initiatives.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/feed.png?height=400&width=600",
       goal: 55000,
       raised: 38000,
       daysLeft: 18
@@ -75,8 +75,8 @@ export default function Campaigns() {
 
   const categories = ['All', 'Urgent', 'Education', 'Healthcare', 'Environment']
 
-  const filteredCampaigns = activeCategory === 'All' 
-    ? campaigns 
+  const filteredCampaigns = activeCategory === 'All'
+    ? campaigns
     : campaigns.filter(campaign => {
         if (activeCategory === 'Urgent') return campaign.daysLeft <= 7;
         // Add more category filters as needed
