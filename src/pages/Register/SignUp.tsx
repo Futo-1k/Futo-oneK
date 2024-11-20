@@ -7,7 +7,7 @@ export class SignUp extends Component {
   render() {
     return (
       <div>
-        <UserHeader/>
+        {/* <UserHeader/> */}
         <UserRegister/>
       </div>
     )
