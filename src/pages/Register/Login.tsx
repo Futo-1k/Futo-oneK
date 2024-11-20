@@ -36,7 +36,7 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <UserHeader />
+    
 
       <main className="flex items-center justify-center min-h-screen py-10 bg-gray-100">
         <div className="w-full p-8 bg-white rounded-lg shadow-lg lg:max-w-6xl md:max-w-2xl sm:max-w-lg sm:p-10">
