@@ -208,18 +208,7 @@ const Header = () => {
                 {label}
               </Link>
             ))}
-            <button
-              onClick={() => handleNavigation('/Login')}
-              className="mt-4 w-full px-4 py-2 border border-[#4ade80] text-[#4ade80] rounded-md hover:bg-[#4ade80] hover:text-white transition-colors"
-            >
-              Login
-            </button>
-            <button
-              onClick={() => handleNavigation('/Login/userRegister')}
-              className="mt-2 w-full px-4 py-2 bg-[#4ade80] text-white rounded-md hover:bg-[#2ecc71] transition-colors"
-            >
-              Signup
-            </button>
+
           </nav>
         </div>
       )}

@@ -3,6 +3,8 @@ import DonationModal from "../../Components/DonationModal";
 import React, { useState } from "react";
 import { FaBell } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { Camera } from "lucide-react";
+
 
 const UserDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,9 +40,56 @@ const UserDashboard = () => {
     'You have a new donation match!',
     'Campaign A has reached 50% of its goal!',
   ];
-
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+    }
+};
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">
+         {/* Profile Picture Upload */}
+         <div className="flex flex-col items-center mb-8">
+                                <div className="relative w-32 h-32 mb-4">
+                                    <div className={`w-full h-full rounded-full overflow-hidden border-4 border-gray-200 ₦{!imagePreview ? 'bg-gray-100' : ''}`}>
+                                        {imagePreview ? (
+                                            <img
+                                                src={imagePreview}
+                                                alt="Profile preview"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center">
+                                                <Camera className="w-12 h-12 text-gray-400" />
+                                            </div>
+                                        )}
+                                    </div>
+                                    <label
+                                        htmlFor="profile-photo"
+                                        className="absolute bottom-0 right-0 bg-[#4ade80] hover:bg-[#2ecc71] text-white p-2 rounded-full cursor-pointer shadow-lg transition-all duration-300"
+                                    >
+                                        <Camera className="w-5 h-5" />
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="profile-photo"
+                                        placeholder="Photo"
+                                        accept="image/*"
+                                        onChange={handleImageChange}
+                                        className="hidden"
+                                    />
+                                </div>
+                                <p className="text-sm text-gray-500">Upload your profile picture</p>
+                            </div>
+
+
+
+
       {/* Welcome Card with User Stats */}
       <div
         className="bg-cover bg-center bg-no-repeat p-8 rounded-lg shadow-lg mb-10"
