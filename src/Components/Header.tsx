@@ -145,12 +145,12 @@ const Header = () => {
           >
             Login
           </button>
-          <button
+          {/* <button
             onClick={() => handleNavigation('/register')}
             className="px-4 py-2 bg-[#4ade80] text-white rounded-md hover:bg-[#2ecc71] transition-colors"
           >
             Signup
-          </button>
+          </button> */}
           <button
             onClick={toggleSearch}
             className="text-gray-600 hover:text-[#4ade80]"
