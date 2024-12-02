@@ -1,21 +1,48 @@
 import React, { useState } from "react";
+import UserHeader from "../../Components/UserHeader";
+import axios from "axios";
 import { Lock, LogIn, Mail, User } from "lucide-react";
 import { BsBuildings, BsFillTelephoneFill } from "react-icons/bs";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import UserHeader from "../../Components/UserHeader"; 
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Mark the handleSubmit function as async
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/User");
-    console.log("Email:", email);
-    console.log("Password:", password);
+
+    console.log("Email:", email); // Debugging email
+    console.log("Password:", password); // Debugging password
+
+    setLoading(true);
+    setErrorMessage(null); // Clear previous error messages
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/login", {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        console.log("Login successful:", response.data);
+        localStorage.setItem("token", response.data.token);
+        navigate("/User");
+      }
+    } catch (error: any) {
+      console.error("Error during login:", error.response?.data || error.message);
+      setErrorMessage(
+        error.response?.data?.message || "An error occurred. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleGoogleLogin = () => {
@@ -36,8 +63,6 @@ const Login: React.FC = () => {
 
   return (
     <>
-    
-
       <main className="flex items-center justify-center min-h-screen py-10 bg-gray-100">
         <div className="w-full p-8 bg-white rounded-lg shadow-lg lg:max-w-6xl md:max-w-2xl sm:max-w-lg sm:p-10">
           <div className="grid gap-8 lg:grid-cols-2">
@@ -85,11 +110,17 @@ const Login: React.FC = () => {
                   <button
                     type="submit"
                     className="flex items-center px-6 py-3 font-semibold text-white transition-colors duration-300 bg-[#4ade80] rounded-lg hover:bg-[#2ecc71]"
+                    disabled={loading}
                   >
-                    Sign in <LogIn className="w-5 h-5 ml-2 stroke-2" />
+                    {loading ? "Signing in..." : "Sign in"} <LogIn className="w-5 h-5 ml-2 stroke-2" />
                   </button>
                 </div>
               </form>
+              {errorMessage && (
+                <div className="p-4 mt-4 text-sm text-red-700 bg-red-100 rounded-lg">
+                  {errorMessage}
+                </div>
+              )}
             </div>
 
             {/* Right Section - Alternative Login Options */}
@@ -122,7 +153,7 @@ const Login: React.FC = () => {
                 <button
                   onClick={handleSchoolEmailLogin}
                   className="flex items-center justify-center w-full px-4 py-3 font-semibold text-gray-800 transition-colors duration-300 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50"
-                >
+                  >
                   <BsBuildings className="w-6 h-6 mr-3 text-purple-500" />
                   Sign in with School Email
                 </button>
