@@ -28,7 +28,7 @@ const User1 = () => {
     }[]
   >([
     {
-      id: 1,
+      id: 90,
       name: "Help Build a School",
       description: "Fundraising to build a school in the local community.",
       donationGoal: 1000000,
@@ -37,7 +37,7 @@ const User1 = () => {
       image: "/frame-226.png",
     },
     {
-      id: 2,
+      id: 91,
       name: "Medical Aid for Children",
       description: "Providing medical aid for underprivileged children.",
       donationGoal: 500000,
@@ -46,13 +46,22 @@ const User1 = () => {
       image: "/frame-234.png",
     },
     {
-      id: 3,
+      id: 92,
       name: "Debt Relief Fund",
       description: "Helping families clear their debts.",
       donationGoal: 700000,
       raisedAmount: 400000,
       startDate: "2024-09-15",
       image: "/frame-235.png",
+    },
+    {
+      id: 93,
+      name: "Emergency Food Relief",
+      description: "Provide emergency food supplies to families affected by natural disasters.",
+      image: "/frame-235.png?height=400&width=600",
+      donationGoal: 30000,
+      raisedAmount: 22000,
+      startDate: "2024-09-15",
     },
   ]);
   const [searchTerm, setSearchTerm] = useState(""); // For campaign search
@@ -103,7 +112,7 @@ const User1 = () => {
   const config = {
     reference: new Date().getTime().toString(),
     email: "ezechibuezeernest@gmail.com",
-    amount: 10000, // Amount in kobo
+    amount: 100000, // Amount in kobo
     publicKey: paystackPublicKey,
 
   };
@@ -258,11 +267,8 @@ const User1 = () => {
           {filteredCampaigns.length > 0 ? (
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               {filteredCampaigns.map((campaign) => (
-                <div className="flex h-auto p-6 bg-white rounded-lg shadow-lg">
-                  <div
-                    key={campaign.id}
-                    className="h-auto p-6 bg-white rounded-lg shadow-lg "
-                  >
+                <div key={campaign.id} className="flex items-center w-full h-auto p-6 space-x-4 bg-white rounded-lg shadow-lg">
+                  <div className="flex-grow">
                     <h3 className="mb-4 text-xl font-semibold text-gray-800">
                       {campaign.name}
                     </h3>
@@ -284,9 +290,12 @@ const User1 = () => {
                     >
                       Donate Now
                     </button>
-
                   </div>
-                  <img className="w-[230px] h-auto" src={campaign.image}/>
+                  <img
+                    src={campaign.image}
+                    alt={campaign.name}
+                    className="object-cover w-1/2 h-auto rounded-lg"
+                  />
                 </div>
               ))}
             </div>

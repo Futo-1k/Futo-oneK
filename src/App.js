@@ -5,7 +5,7 @@ import AboutUs from "./pages/AboutUs.tsx";
 import AdminDashboard from "./Admin/AdminDashboard.tsx";
 import AdminLogin from "./Admin/AdminLogin.tsx";
 import Campaigns  from "./pages/Campaigns.tsx";
-import EnhancedGallery from "./pages/enhancedGallery.tsx";
+import Challenge from "./pages/UserPages/Challenge.tsx";
 import GalleryUi from "./pages/Ui/GalleryUi.tsx";
 import Home from "./pages/Home.tsx";
 import Login from "./pages/Register/Login.tsx";
@@ -29,6 +29,7 @@ export default function Component() {
       <Route path="User1" element={<User1/>} />
 
       <Route path="Login" element={<Login/>} />
+      <Route path="challenge" element={<Challenge/>} />
 
       <Route path="SignUp" element={<SignUp/>} />
       <Route path="Gallery" element={<GalleryUi/>} />

@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from "react";
+import Spinner from "../../Checkout/Spinner.tsx";
+import axios from "axios";
 import { Book, Briefcase, School } from "lucide-react";
 import { CgMenuGridO } from "react-icons/cg";
 import { FaBell } from "react-icons/fa";
+import { usePaystackPayment } from "react-paystack";
 import { Link } from "react-router-dom";
 
 const User1 = () => {
-  // Simulating user data
   const [userName, setUserName] = useState("Eze Ernest");
-  const [notifications, setNotifications] = useState([1, 2]); // Simulates unread notifications
+  const [notifications, setNotifications] = useState<number[]>([1, 2]);
   const [userStats, setUserStats] = useState({
     donationsMade: 12,
     totalAmountDonated: 50000,
     rankingPercent: 10,
   });
-
-  // Simulating campaigns data
-  const [campaigns, setCampaigns] = useState([
+  const [loading, setLoading] = useState(false);
+  const [campaigns, setCampaigns] = useState<
+    {
+      id: number;
+      name: string;
+      description: string;
+      donationGoal: number;
+      raisedAmount: number;
+      startDate: string;
+      image: string;
+    }[]
+  >([
     {
       id: 1,
       name: "Help Build a School",
@@ -23,6 +34,7 @@ const User1 = () => {
       donationGoal: 1000000,
       raisedAmount: 750000,
       startDate: "2024-11-01",
+      image: "/frame-226.png",
     },
     {
       id: 2,
@@ -31,6 +43,7 @@ const User1 = () => {
       donationGoal: 500000,
       raisedAmount: 300000,
       startDate: "2024-10-20",
+      image: "/frame-234.png",
     },
     {
       id: 3,
@@ -39,34 +52,127 @@ const User1 = () => {
       donationGoal: 700000,
       raisedAmount: 400000,
       startDate: "2024-09-15",
+      image: "/frame-235.png",
+    },
+    {
+      id: 4,
+      name: "Emergency Food Relief",
+      description: "Provide emergency food supplies to families affected by natural disasters.",
+      image: "/frame-235.png?height=400&width=600",
+      donationGoal: 30000,
+      raisedAmount: 22000,
+      startDate: "2024-09-15",
     },
   ]);
+  const [searchTerm, setSearchTerm] = useState(""); // For campaign search
+  const [errorMessage, setErrorMessage] = useState(""); // For displaying errors
 
-  // States for handling modal and selected campaign
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCampaignId, setSelectedCampaignId] = useState(null);
-
-  // Simulate fetching user data
+  // Fetch campaigns data
   useEffect(() => {
-    const fetchUserData = async () => {
-      const storedName = "Eze Ernest";
-      const stats = {
-        donationsMade: 12,
-        totalAmountDonated: 50000,
-        rankingPercent: 10,
-      };
-      setUserName(storedName);
-      setUserStats(stats);
+    const fetchCampaigns = async () => {
+      setLoading(true);
+      setErrorMessage(""); // Reset error message
+      try {
+        const response = await fetch(
+          "/api/campaigns", // Backend API endpoint
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace with your token logic
+            },
+          }
+        );
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error("Unauthorized: Please log in again.");
+          } else if (response.status === 404) {
+            throw new Error("Campaigns not found.");
+          } else {
+            throw new Error("Failed to fetch campaigns.");
+          }
+        }
+
+        const data = await response.json();
+        setCampaigns(data); // Assuming the API returns an array of campaigns
+      } catch (error: any) {
+        console.error("Error fetching campaigns:", error);
+        setErrorMessage(error.message || "An error occurred while fetching campaigns.");
+      } finally {
+        setLoading(false);
+      }
     };
-    fetchUserData();
+
+    fetchCampaigns();
   }, []);
 
-  // Simulate a Paystack payment integration (placeholder function)
-  const handlePayment = (campaignId) => {
-    alert(`Initiating payment for campaign ID: ${campaignId}`);
-    // Replace this alert with actual Paystack integration logic
-    // Example: open Paystack payment modal here
+
+  const paystackPublicKey = process.env.REACT_APP_PAYSTACK_PUBLIC_KEY || "pk_test_00745f96bdd25023dd8fc7625fbbec024e276b06";
+
+
+  const config = {
+    reference: new Date().getTime().toString(),
+    email: "ezechibuezeernest@gmail.com",
+    amount: 100000, // Amount in kobo
+    publicKey: paystackPublicKey,
+
   };
+
+  if (!config.publicKey) {
+    console.error("Paystack public key is missing. Please set it in the .env file.");
+  }
+
+  const initializePayment = usePaystackPayment(config);
+
+  const handlePayment = async (campaignId: number, amount: number) => {
+    const campaign = campaigns.find((c) => c.id === campaignId);
+    if (!campaign) {
+      alert("Campaign not found.");
+      return;
+    }
+
+    const paymentConfig = {
+      ...config,
+      amount: amount * 100, // Convert amount to kobo
+      metadata: {
+        campaignId,
+        campaignName: campaign.name,
+      },
+      onSuccess: async (reference: any) => {
+        console.log("Payment success:", reference);
+        // Save order to MongoDB
+        await axios.post("/api/paystack/webhook", {
+          reference: reference.id,
+          // Include other necessary data to create the order
+        });
+
+        alert("Payment successful!");
+        // Optionally, refresh the campaigns or update the UI
+      },
+      onClose: () => {
+        console.log("Payment closed");
+      },
+    };
+
+    try {
+      initializePayment(paymentConfig.onSuccess, paymentConfig.onClose);
+    } catch (error) {
+      console.error("Error initializing payment:", error);
+      alert("An error occurred while initializing the payment. Please try again.");
+    }
+  };
+
+  // Filter campaigns based on search term
+  const filteredCampaigns = campaigns.filter(
+    (campaign) =>
+      campaign.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      campaign.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <section className="w-full min-h-screen px-4 py-16 bg-slate-500 md:py-24">
@@ -77,7 +183,9 @@ const User1 = () => {
           style={{ backgroundImage: 'url("/background.png")' }}
         >
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-3xl font-bold text-white">Welcome, {userName}</h2>
+            <h2 className="text-3xl font-bold text-white">
+              Welcome, {userName}
+            </h2>
             <div className="relative">
               <FaBell className="text-2xl text-white cursor-pointer" />
               {notifications.length > 0 && (
@@ -88,17 +196,13 @@ const User1 = () => {
             </div>
           </div>
           <p className="mb-4 text-white">
-            You have donated {userStats.donationsMade} times, contributing a total of ₦
-            {userStats.totalAmountDonated.toLocaleString()}.
+            You have donated {userStats.donationsMade} times, contributing a
+            total of ₦{userStats.totalAmountDonated.toLocaleString()}.
           </p>
           <p className="text-white">
             You are in the top {userStats.rankingPercent}% of donors! 🥳
           </p>
-        </div>
-
-        <div className="flex flex-col items-center justify-center gap-8 lg:flex-row">
-          {/* Links for Categories */}
-          <div className="flex-1 w-full h-auto min-h-[300px] bg-blue-300 rounded-xl shadow-lg p-6 lg:p-12">
+          <div className="flex-1 w-full h-auto min-h-[170px] mt-6 bg-blue-300 rounded-xl shadow-lg p-6 lg:p-12">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
               <Link
                 to="/all"
@@ -133,27 +237,71 @@ const User1 = () => {
               </Link>
             </div>
           </div>
+
+
         </div>
 
-        {/* Available Campaigns */}
-        <div className="mb-12">
-          <h2 className="mb-6 text-2xl font-semibold text-gray-800">Available Campaigns</h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            {campaigns.map((campaign) => (
-              <div key={campaign.id} className="h-auto p-6 bg-white rounded-lg shadow-lg">
-                <h3 className="mb-4 text-xl font-semibold text-gray-800">{campaign.name}</h3>
-                <p className="mb-4 text-gray-600">{campaign.description}</p>
-                <p className="mb-2 text-gray-600">Goal: ₦{campaign.donationGoal.toLocaleString()}</p>
-                <p className="mb-4 text-gray-600">Raised: ₦{campaign.raisedAmount.toLocaleString()}</p>
-                <button
-                  onClick={() => handlePayment(campaign.id)}
-                  className="mt-4 px-6 py-2 bg-[#4ade80] hover:bg-[#2ecc71] text-white rounded-md"
-                >
-                  Donate Now
-                </button>
-              </div>
-            ))}
+        {/* Campaign Search */}
+        <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Search campaigns..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-lg"
+          />
+        </div>
+
+        {/* Error Message */}
+        {errorMessage && (
+          <div className="mb-6 text-center text-red-500">
+            {errorMessage}
           </div>
+        )}
+
+        {/* Campaigns */}
+        <div className="mb-12">
+          <h2 className="mb-6 text-2xl font-semibold text-gray-800">
+            Available Campaigns
+          </h2>
+          {filteredCampaigns.length > 0 ? (
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+              {filteredCampaigns.map((campaign) => (
+                <div className="flex items-center w-full h-auto p-6 space-x-4 bg-white rounded-lg shadow-lg">
+                  <div className="flex-grow">
+                    <h3 className="mb-4 text-xl font-semibold text-gray-800">
+                      {campaign.name}
+                    </h3>
+                    <p className="mb-4 text-gray-600">{campaign.description}</p>
+                    <p className="mb-2 text-gray-600">
+                      Goal: ₦{campaign.donationGoal.toLocaleString()}
+                    </p>
+                    <p className="mb-4 text-gray-600">
+                      Raised: ₦{campaign.raisedAmount.toLocaleString()}
+                    </p>
+                    <button
+                      onClick={() =>
+                        handlePayment(
+                          campaign.id,
+                          campaign.donationGoal - campaign.raisedAmount
+                        )
+                      }
+                      className="mt-4 px-6 py-2 bg-[#4ade80] hover:bg-[#2ecc71] text-white rounded-md"
+                    >
+                      Donate Now
+                    </button>
+                  </div>
+                  <img
+                    src={campaign.image}
+                    alt={campaign.name}
+                    className="object-cover w-1/2 h-auto rounded-lg"
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-600">No campaigns found.</p>
+          )}
         </div>
 
         {/* Donation History Table */}
