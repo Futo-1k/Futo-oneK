@@ -29,7 +29,7 @@ const UserHeader = () => {
 
   const navLinks = [
     { path: "/", label: "Home" },
-    { path: "AboutUs", label: "About" },
+    { path: "/AboutUs", label: "About" },
     { path: "/User", label: "User" },
     { path: "/Campaigns", label: "Campaigns" },
 

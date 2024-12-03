@@ -6,7 +6,6 @@ import AdminDashboard from "./Admin/AdminDashboard.tsx";
 import AdminLogin from "./Admin/AdminLogin.tsx";
 import Campaigns  from "./pages/Campaigns.tsx";
 import Challenge from "./pages/UserPages/Challenge.tsx";
-import EnhancedGallery from "./pages/enhancedGallery.tsx";
 import GalleryUi from "./pages/Ui/GalleryUi.tsx";
 import Home from "./pages/Home.tsx";
 import Login from "./pages/Register/Login.tsx";

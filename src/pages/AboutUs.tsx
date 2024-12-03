@@ -10,7 +10,7 @@ export default function AboutUs() {
   };
 
   return (
-    <div className="bg-[#FCFCFC] min-h-screen font-serif font-semibold text-gray-800">
+    <div className="bg-[#FCFCFC] min-h-screen  text-gray-800">
       <Header />
 
       <main>
