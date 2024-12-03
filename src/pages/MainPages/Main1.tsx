@@ -20,7 +20,7 @@ export class Main1 extends Component {
                                     Donate Now
                                 </button>
                                 </Link>
-                                
+
                                 <Link to="/AboutUs">
                                     <button className="px-6 py-3 border border-[#4ade80] text-[#4ade80] rounded-md hover:bg-[#4ade80] hover:text-white transition-colors">
                                         Know About Us

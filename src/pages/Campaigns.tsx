@@ -1,6 +1,7 @@
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import React, { useState } from "react";
+import { usePaystackPayment } from "react-paystack";
 import { Link } from "react-router-dom";
 
 type Campaign = {
@@ -78,10 +79,70 @@ export default function Campaigns() {
   const filteredCampaigns = activeCategory === 'All'
     ? campaigns
     : campaigns.filter(campaign => {
-        if (activeCategory === 'Urgent') return campaign.daysLeft <= 7;
-        // Add more category filters as needed
-        return true;
-      });
+      if (activeCategory === 'Urgent') return campaign.daysLeft <= 7;
+      // Add more category filters as needed
+      return true;
+    });
+
+
+    const paystackPublicKey = process.env.REACT_APP_PAYSTACK_PUBLIC_KEY || "pk_test_00745f96bdd25023dd8fc7625fbbec024e276b06";
+
+
+    const config = {
+      reference: new Date().getTime().toString(),
+      email: "ezechibuezeernest@gmail.com",
+      amount: 100000, // Amount in kobo
+      publicKey: paystackPublicKey,
+
+    };
+
+    if (!config.publicKey) {
+      console.error("Paystack public key is missing. Please set it in the .env file.");
+    }
+
+    const initializePayment = usePaystackPayment(config);
+
+    const handlePayment = async (campaignId: number, amount: number) => {
+      const campaign = campaigns.find((c) => c.id === campaignId);
+      if (!campaign) {
+        alert("Campaign not found.");
+        return;
+      }
+
+      const paymentConfig = {
+        ...config,
+        amount: amount * 100, // Convert amount to kobo
+        metadata: {
+          campaignId,
+          campaignName: campaign.title,
+        },
+        onSuccess: async (reference: any) => {
+          console.log("Payment success:", reference);
+          alert("Payment successful!");
+          // Optionally, refresh the campaigns or update the UI
+        },
+        onClose: () => {
+          console.log("Payment closed");
+        },
+      };
+
+      try {
+        initializePayment(paymentConfig.onSuccess, paymentConfig.onClose);
+      } catch (error) {
+        console.error("Error initializing payment:", error);
+        alert("An error occurred while initializing the payment. Please try again.");
+      }
+    };
+
+
+
+
+
+  const calculateProgress = (raised: number, goal: number): number => {
+    if (!goal || goal <= 0) return 0;
+    const percentage = (raised / goal) * 100;
+    return Math.min(Math.max(percentage, 0), 100); // Clamp between 0 and 100
+  };
 
   return (
     <div className="bg-[#FCFCFC] min-h-screen">
@@ -124,9 +185,11 @@ export default function Campaigns() {
                     <div className="mb-4">
                       <div className="h-2 bg-gray-200 rounded-full">
                         <div
-                          className="h-2 bg-[#4ade80] rounded-full"
-                          style={{ width: `₦{(campaign.raised / campaign.goal) * 100}%` }}
-                        ></div>
+                          className="h-full bg-green-400 rounded-full transition-all duration-300"
+                          style={{
+                            width: `${calculateProgress(campaign.raised, campaign.goal)}%`
+                          }}
+                        />
                       </div>
                     </div>
                     <div className="flex justify-between text-sm text-gray-600 mb-4">
@@ -135,7 +198,15 @@ export default function Campaigns() {
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-600">{campaign.daysLeft} days left</span>
-                      <button className="px-4 py-2 bg-[#4ade80] text-white rounded-md hover:bg-[#FF5555] transition-colors">
+                      <button
+                      className="px-4 py-2 bg-[#4ade80] text-white rounded-md hover:bg-[#FF5555] transition-colors"
+                      onClick={() =>
+                        handlePayment(
+                          campaign.id,
+                          campaign.goal - campaign.raised
+                        )
+                      }
+                      >
                         Donate Now
                       </button>
                     </div>

@@ -5,12 +5,13 @@ import AboutUs from "./pages/AboutUs.tsx";
 import AdminDashboard from "./Admin/AdminDashboard.tsx";
 import AdminLogin from "./Admin/AdminLogin.tsx";
 import Campaigns  from "./pages/Campaigns.tsx";
-import EnhancedGallery from "./pages/enhancedGallery.tsx";
+import Challenge from "./pages/UserPages/Challenge.tsx";
 import GalleryUi from "./pages/Ui/GalleryUi.tsx";
 import Home from "./pages/Home.tsx";
 import Login from "./pages/Register/Login.tsx";
 import React from "react";
 import SignUp from "./pages/Register/SignUp.tsx";
+import User1 from "./pages/UserPages/User1.tsx";
 import UserRegister from "./pages/Register/UserRegister.tsx";
 import UserUi from "./pages/UserPages/UserUi.tsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -25,7 +26,10 @@ export default function Component() {
      {/* Route for the About Us page */}
       <Route path="/" element={<Home/>} />
       <Route path="User" element={<UserUi/>} />
+      <Route path="User1" element={<User1/>} />
+
       <Route path="Login" element={<Login/>} />
+      <Route path="challenge" element={<Challenge/>} />
 
       <Route path="SignUp" element={<SignUp/>} />
       <Route path="Gallery" element={<GalleryUi/>} />
