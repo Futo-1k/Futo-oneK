@@ -1,8 +1,7 @@
-
 import Footer from "../../Components/Footer";
+import Gallery from "../Gallary";
 import Header from "../../Components/Header";
 import React, { Component } from "react";
-import Gallery from "../Gallary";
 
 export class GalleryUi extends Component {
   render() {
