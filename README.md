@@ -40,6 +40,9 @@ The project was collaboratively developed by the following contributors:
 | Joel                   | [Jocript](https://github.com/Jocript)     |
 | David                  | [chike523](https://github.com/chike523)   |
 | Anyanwu Johnpaul       | [anyanwujohnpaul](https://github.com/anyanwujohnpaul) |
+| Bethel       | [El-Beth-El](https://github.com/El-Beth-El) |
+|Acholonu       | [dreaxy69](https://github.com/dreaxy69) |
+
 
 ## How to Run
 1. Clone the repository:
